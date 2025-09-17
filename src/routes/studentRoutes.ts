@@ -1,6 +1,6 @@
 import { Router, Request, Response } from "express";
 import { students } from "../db/db";
-import { zStudentPostBody, zStudentPutBody } from "../schemas/studentSchema"
+import { zStudentPostBody, zStudentPutBody, zStudentDeleteBody } from "../schemas/studentSchema"
 import { Student } from "../libs/types"
 const router = Router();
 
@@ -62,7 +62,7 @@ router.post("/", async(req: Request, res: Response,next:Function) => {
 
     const newStd = students.push(req.body);
       return res.json(newStd);
-      // return res.json({ ok: true, message: "successfuly" });
+      // return res.json({ ok: true, message: "successfully" });
   } catch (err) {
     next(err);
   }
@@ -101,5 +101,27 @@ router.put("/", async(req: Request, res: Response,next:Function) => {
   }
 });
 
+router.delete("/", (req: Request, res: Response, next: Function) => {
+  try {
+    const parseResult = zStudentDeleteBody.safeParse(req.body);
+    if (!parseResult.success) {
+      return res.status(400).json({ ok: false, message: parseResult.error.issues[0].message });
+    }
+
+  
+    const studentToDelete = students.find((std:Student) => std.studentId === req.body.studentId);
+
+    if (!studentToDelete) {
+      return res.status(404).json({ ok: false, message: "Student ID does not exist" });
+    }
+
+
+    const result = students.filter((std:Student) => std.studentId !== req.body.studentId);
+
+    res.json({ ok: true, message: "Student deleted successfully", deletedStudent: studentToDelete });
+  } catch (err) {
+    next(err);
+  }
+});
 
 export default router;

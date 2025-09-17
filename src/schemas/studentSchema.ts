@@ -28,3 +28,7 @@ export const zStudentPutBody = z.object({
   program: zProgram.nullish(), //program can be null or undefined
   programId :zprogramId.nullish(), //programId can be null or undefined
 });
+
+export const zStudentDeleteBody = z.object({
+  studentId: zStudentId
+});
