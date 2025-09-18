@@ -11,6 +11,7 @@ const zLastName = z
   .min(3, { message: "Last name requires at least 3 characters" });
 const zProgram = z.enum(["CPE","ISNE"], {message: "Program must be either CPE or ISNE",});
 const zprogramId = z.number().refine((val) => val === 101 || val === 102, {message: "Program Id must be either 101 or 102"});
+const zCourse = z.array(z.number());
 
 export const zStudentPostBody = z.object({
   studentId: zStudentId,
@@ -18,7 +19,7 @@ export const zStudentPostBody = z.object({
   lastName: zLastName,
   program: zProgram,
   programId :zprogramId,
-  course :[]
+  course :zCourse.nullish()
 });
 
 export const zStudentPutBody = z.object({

@@ -25,8 +25,8 @@
   "contributors": [],
   "scripts": {
     "dev": "nodemon",
-    "build": "tsc && tsc-alias",
-    "start": "node ./dist/src/index.js"
+    "build": "npx tsc && tsc-alias",
+    "start": "node dist/index.js"
   },
   "dependencies": {
     "@tsconfig/node-lts": "^22.0.2",
