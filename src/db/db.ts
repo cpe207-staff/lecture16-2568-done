@@ -1,4 +1,4 @@
-import { Student, Course } from "../libs/types"; 
+import { Student, Course } from "../libs/types.js"; 
 export let students: Student[] = [
     {
       studentId: "650610001",
